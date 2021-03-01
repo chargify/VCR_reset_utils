@@ -5,11 +5,11 @@ module VCRResetUtils
 
   def self.configure
     VCR.configure do |c|
-      c.default_cassette_options = { record: :all } if ENV["RECORD_VCR"] =~ /^(true|1)$/i
+      c.default_cassette_options = { record: :all } if ENV['RECORD_VCR'] =~ /^(true|1)$/i
     end
 
     VCR.extend(CassetteCleaner)
-    
+
     self.configuration ||= Configuration.new
     yield(configuration)
   end
@@ -20,9 +20,9 @@ module VCRResetUtils
     def initialize
       @allow_key_words_without_dictionary = true
       @key_words_dictionary = {
-        authorize_net: '"authorizenet\\|authorize_net\\|authorize net"',
-        stripe: "stripe",
-        moneris: "moneris | grep -v moneris_us"
+        cybersource: '"cybersource\\|cyber_source\\|cyber source"',
+        stripe: 'stripe',
+        moneris: 'moneris | grep -v moneris_us'
       }
     end
   end

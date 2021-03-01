@@ -7,7 +7,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.4.4)
-    rake (10.5.0)
+    rake (13.0.3)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -28,10 +28,10 @@ PLATFORMS
 
 DEPENDENCIES
   VCR_reset_utils!
-  bundler
-  rake (~> 10.0)
+  bundler (~> 2.2, >= 2.2.11)
+  rake (~> 13.0, >= 13.0.3)
   rspec (~> 3.0)
   vcr
 
 BUNDLED WITH
-   2.1.4
+   2.2.11

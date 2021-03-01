@@ -10,13 +10,13 @@ module VCRResetUtils
 
     def files_with_tests_to_skip
       system(
-        "git grep -i --files-with-matches VCRResetUtils.skip | xargs grep -i " + search_word +
-          " | grep -v vcr_utils/reset_spec.rb | cut -d : -f 1 | uniq | grep .rb"
+        'git grep -i --files-with-matches VCRResetUtils.skip | xargs grep -i ' + search_word +
+          ' | grep -v "vcr_utils/reset_spec.rb\|rails_helper.rb" | cut -d : -f 1 | uniq | grep .rb'
       )
     end
 
     def call
-      system(search_files_commend + " | xargs bundle exec rspec")
+      system(search_files_commend + ' | xargs bundle exec rspec')
     end
 
     def files_to_rerun
@@ -31,13 +31,14 @@ module VCRResetUtils
     private
 
     def search_files_commend
-      'git grep -i --files-with-matches "VCR\.use_cassette\|vcr_base_path\|vcr_path\|cassette_name" ' +
-        "| xargs grep -i " + search_word + " | grep -v vcr_utils/reset_spec.rb | cut -d : -f 1 | uniq | grep .rb"
+      'git grep -i --files-with-matches "VCR\.use_cassette\|vcr_base_path\|vcr_path\|cassette_name" | xargs grep -i ' +
+        search_word + ' | grep -v "vcr_utils/reset_spec.rb\|rails_helper.rb" | cut -d : -f 1 | uniq | grep .rb'
     end
 
     def search_word
-      return @key_word if !VCRResetUtils::Reset.key_words.include?(@key_word.to_sym) &&
-                          VCRResetUtils.configuration.allow_key_words_without_dictionary
+      if !VCRResetUtils::Reset.key_words.include?(@key_word.to_sym) && VCRResetUtils.configuration.allow_key_words_without_dictionary
+        return @key_word
+      end
 
       VCRResetUtils.configuration.key_words_dictionary[@key_word.to_sym]
     end
